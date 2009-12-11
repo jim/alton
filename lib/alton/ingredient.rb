@@ -4,10 +4,10 @@ module Alton
     class UnparseableIngredient < StandardError; end
     class UnsupportedUnit < StandardError; end
     
-    # Parses an ingredient line into a standadized hash 
+    # Parses an ingredient line into an Ingredient
     #
     # @param [String] text to process
-    # @return [Hash] hash representation
+    # @return [Alton::Ingredient] Object representation
     def self.parse_text(text)
 
       determine_quantity = lambda do |text|
@@ -23,7 +23,7 @@ module Alton
       
       determine_unit = lambda do |text|
         match = Alton.units.find do |unit|
-          unit.names.include?(text)
+          unit.match?(text)
         end
         return match if match
         raise UnsupportedUnit.new("unit not supported: '#{text}'")
@@ -36,9 +36,8 @@ module Alton
       regex = %r{(.+)\s+(#{units})s?\.?\s+(.+)}
 
       if text.downcase =~ regex
-        # amount = Amount.new(determine_quantity.call($1), determine_unit.call($2))
-        # self.new($3, amount)
         quantity, unit, name = $1, $2, $3
+        unit = text.match(/\s(#{unit})s?\.?\s/i)[1]
         amount = Amount.new(determine_quantity.call(quantity), determine_unit.call(unit))
         self.new(name, amount)
       else

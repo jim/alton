@@ -1,7 +1,7 @@
 require 'example_helper'
 
-def should_parse(ingredient, quantity, unit, name)
-  it "parses '#{ingredient}'" do
+def should_parse(ingredient, quantity, unit, name, options={})
+  it "parses '#{ingredient}'", options do
     result = Alton::Ingredient::parse_text(ingredient)
     result.name.should eql(name)
     result.amount.unit.key.should eql(unit)
@@ -11,34 +11,64 @@ end
 
 describe "Ingredient parsing" do
 
-  should_parse '1 tablespoon olive oil', 
-    1, :tablespoon, 'olive oil'
+  describe "tablespoon" do
+
+    should_parse '1 tablespoon olive oil', 
+      1, :tablespoon, 'olive oil'
     
-  should_parse '1 cup fresh smooth peanut butter', 
-    1, :cup, 'fresh smooth peanut butter'
-
-  should_parse '1/2 cup hot water', 
-    0.5, :cup, 'hot water'
-
-  should_parse '2 cloves garlic, finely minced and mashed',
-    2, :clove, 'garlic, finely minced and mashed'
-  
-  should_parse '2 Tablespoons soy sauce',
-    2, :tablespoon, 'soy sauce'
-  
-  should_parse '1 teaspoon ground cumin',
-    1, :teaspoon, "ground cumin"
-  
-  should_parse '1/4 teaspoon cayenne powder',
-    0.25, :teaspoon, 'cayenne powder'
+    should_parse '1 T olive oil', 
+      1, :tablespoon, 'olive oil'
     
-  should_parse '1/2 teaspoon curry powder',
-    0.5, :teaspoon, 'curry powder'
+    should_parse '1 tbsp olive oil', 
+      1, :tablespoon, 'olive oil'
+      
+  end
 
-  should_parse '1/4 tsp coriander',
-    0.25, :teaspoon, 'coriander'
+  describe "teaspoon" do
+    
+    should_parse '1 teaspoon ground cumin',
+      1, :teaspoon, "ground cumin"
 
-  should_parse '1 teaspoon fresh lemon juice',
-    1, :teaspoon, 'fresh lemon juice'
+    should_parse '1 t ground cumin',
+      1, :teaspoon, 'ground cumin'
+      
+    should_parse '1 tsp ground cumin',
+      1, :teaspoon, 'ground cumin'
+    
+  end
+
+  describe "cup" do
+    
+    should_parse '1 cup fresh smooth peanut butter', 
+      1, :cup, 'fresh smooth peanut butter'
+
+    should_parse '1 C fresh smooth peanut butter', 
+      1, :cup, 'fresh smooth peanut butter'
+
+    should_parse '1 c fresh smooth peanut butter', 
+      1, :cup, 'fresh smooth peanut butter'
+    
+  end
+
+  describe "plural units" do
+    
+    should_parse '2 tablespoons olive oil', 
+      2, :tablespoon, 'olive oil'
+    
+  end
+  
+  describe "perioud after abbreviation" do
+    
+    should_parse '2 tsp. olive oil', 
+      2, :teaspoon, 'olive oil'
+    
+  end
+
+  describe "odd units" do
+    
+    should_parse '2 cloves garlic, finely minced and mashed',
+      2, :clove, 'garlic, finely minced and mashed'
+
+  end
 
 end

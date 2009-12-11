@@ -11,7 +11,7 @@ module Alton
     
     def initialize(name)
       Alton.units << self
-      @name = name
+      @name = name.to_s
       @abbreviations = {}
     end
     
@@ -19,8 +19,13 @@ module Alton
       @name.to_sym
     end
     
-    def names
-      @abbreviations.keys << @name.to_s
+    def match?(abbreviation)
+      return true if abbreviation == @name
+      @abbreviations.each_pair do |abbr, options|
+        return true if abbreviation == abbr ||
+                       (abbreviation.downcase == abbr.downcase && !options[:case_sensitive] == true)
+      end
+      false
     end
 
     module Proxy
@@ -63,12 +68,13 @@ Alton::Unit.define do
   unit :tablespoon do
     abbreviated 'T', :case_sensitive => true
     abbreviated 'tbs'
+    abbreviated 'tbsp'
     volume '1/2', :fl_oz
     volume 14.79, :ml
   end
   
   unit :cup do
-    abbreviated 'C'
+    abbreviated 'c'
     volume 8, :fl_oz
     volume 236.59, :ml
   end
