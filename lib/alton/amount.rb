@@ -16,9 +16,9 @@ module Alton
           Rational(numerator, denominator)
         end        
       elsif text =~ /\./
-        # text.to_f
+        text.to_f
       else
-        # text.to_i
+        text.to_i
       end
     end
     

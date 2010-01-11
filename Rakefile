@@ -5,8 +5,8 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "alton"
-    gem.summary = %Q{Parses the shit out of recipes}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Parses textual recipes into Ruby objects}
+    gem.description = %Q{Parses textual recipes into Ruby objects}
     gem.email = "jim@autonomousmachine.com"
     gem.homepage = "http://github.com/jim/alton"
     gem.authors = ["Jim Benton"]
@@ -19,7 +19,7 @@ rescue LoadError
 end
 
 require 'micronaut/rake_task'
-Micronaut::RakeTask.new(examples) do |examples|
+Micronaut::RakeTask.new do |examples|
   examples.pattern = 'examples/**/*_example.rb'
   examples.ruby_opts << '-Ilib -Iexamples'
 end

@@ -11,14 +11,15 @@ module Alton
     def self.parse_text(text)
 
       determine_quantity = lambda do |text|
-        case text
-          when /(\d+) (\d)\/(\d+)/
-            $1.to_i + ($2.to_f / $3.to_i)
-          when /(\d+)\/(\d+)/
-            $1.to_f / $2.to_i
-          else
-            text.to_i
-          end
+        # case text
+        #   when /(\d+) (\d)\/(\d+)/
+        #     $1.to_i + ($2.to_f / $3.to_i)
+        #   when /(\d+)\/(\d+)/
+        #     $1.to_f / $2.to_i
+        #   else
+        #     text.to_i
+        #   end
+        Alton::Amount.parse_quantity(text)
       end
       
       determine_unit = lambda do |text|

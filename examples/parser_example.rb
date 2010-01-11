@@ -57,6 +57,13 @@ describe "Ingredient parsing" do
     
   end
   
+  describe 'fractional quantities' do
+    
+    parses '3/4 C AP flour',
+      Rational(3,4), :cup, 'ap flour'
+    
+  end
+  
   describe "perioud after abbreviation" do
     
     parses '2 tsp. olive oil', 
