@@ -75,16 +75,19 @@ Alton::Unit.define do
   
   unit :cup do
     abbreviated 'c'
+    abbreviated 'C'
     volume 8, :fl_oz
     volume 236.59, :ml
   end
   
   unit :pint do
+    abbreviated 'pt'
     volume 16, :fl_oz
     volume 473.18, :ml
   end
   
   unit :quart do
+    abbreviated 'qt'
     volume 32, :fl_oz
     volume 946.35, :ml
   end
