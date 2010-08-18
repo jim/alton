@@ -27,4 +27,14 @@ NOM
     ['Put in fridge after use.']
   ]
   
+  single_line_plain_lists = <<NOM
+In a large bowl, cream vegetable shortening and butter.
+Add vanilla.
+NOM
+  
+  parses_steps_block single_line_plain_lists, [
+    ['In a large bowl, cream vegetable shortening and butter.'],
+    ['Add vanilla.'],
+  ]
+  
 end

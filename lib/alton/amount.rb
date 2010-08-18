@@ -2,6 +2,10 @@ module Alton
 
   class Amount < Struct.new(:quantity, :unit)
 
+    def +(other)
+      return self.class.new(quantity + other.quantity, unit)
+    end
+
     def to_s
       "#{@quantity} #{@unit}"
     end

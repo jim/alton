@@ -4,6 +4,10 @@ module Alton
     attr_accessor :units
   end
   @units = []
+
+  def self.Unit(name)
+    Alton.units.find {|u|u.match?(name.to_s)}
+  end
   
   class Unit
     attr :abbreviations
@@ -54,6 +58,7 @@ module Alton
     end
     
   end
+  
 end
 
 Alton::Unit.define do
