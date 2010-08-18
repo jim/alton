@@ -4,6 +4,18 @@ module Alton
     class UnparseableIngredient < StandardError; end
     class UnsupportedUnit < StandardError; end
     
+    # Parses an ingredient block into an array of Ingredients
+    #
+    # Splits input on newlines, and then runs each through parse_text.
+    # 
+    # @param [String] text to process
+    # @return [Array] Collections of resulting Alton::Ingredient objects
+    def self.parse_block(text)
+      text.split("\n").map do |line|
+        self.parse_text(line)
+      end
+    end
+    
     # Parses an ingredient line into an Ingredient
     #
     # @param [String] text to process
