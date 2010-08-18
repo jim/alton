@@ -1,4 +1,7 @@
 module Alton
+  
+  class IngredientMismatch < StandardError; end
+  
   class Ingredient < Struct.new(:name, :amount)
   
     class UnparseableIngredient < StandardError; end
@@ -57,8 +60,6 @@ module Alton
         raise UnparseableIngredient.new("could not parse '#{text}'")
       end
     end
-    
-    class IngredientMismatch < StandardError; end
     
     # Combines two Ingredient objects
     #

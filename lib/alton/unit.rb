@@ -5,6 +5,11 @@ module Alton
   end
   @units = []
 
+  # Convenience method for retrieving a Alton::Unit instance by name or abbreviation
+  #
+  # @param [String, Symbol] name name or abbreviation for requested unit
+  # @return [Alton::Unit] when a matching unit is found
+  # @return [nil] when no matching unit is found
   def self.Unit(name)
     Alton.units.find {|u|u.match?(name.to_s)}
   end
