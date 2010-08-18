@@ -57,6 +57,18 @@ module Alton
         raise UnparseableIngredient.new("could not parse '#{text}'")
       end
     end
+    
+    class IngredientMismatch < StandardError; end
+    
+    # Combines two Ingredient objects
+    #
+    # @raise [Alton::IngredientMismatch] if ingredients have different names
+    # @param [Alton::Ingredient] ingredient to add
+    # @return [Alton::Ingredient] new Alton::Ingredient with a summed amount
+    def +(other)
+      raise IngredientMismatch unless self.name == other.name
+      self.class.new(self.name, self.amount + other.amount)
+    end
   
   end
 end
