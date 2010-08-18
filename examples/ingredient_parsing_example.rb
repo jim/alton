@@ -7,14 +7,14 @@ def ingredient_should_match(ingredient, quantity, unit, name)
 end
 
 def parses_ingredient(text, quantity, unit, name, options={})
-  it "parses '#{text}'", options do
+  it "parses ingredient '#{text}'", options do
     ingredient = Alton::Ingredient::parse_text(text)
     ingredient_should_match(ingredient, quantity, unit, name)
   end
 end
 
 def parses_ingredients_block(text, expected_array, options={})
-  it "parses #{text}", options do
+  it "parses ingredients '#{text}'", options do
     lines = text.split("\n")
     Alton::Ingredient::parse_block(text).each_with_index do |result, index|
       ingredient_should_match(result, *expected_array[index])
@@ -93,7 +93,7 @@ describe "Ingredient parsing" do
 
   describe "blocks" do
     
-    ingredients = <<-NOM
+    basic_ingredients = <<NOM
 1 tsp. vanilla extract
 3 cups confectioner's sugar
 2 tbs. milk
@@ -101,7 +101,7 @@ describe "Ingredient parsing" do
 1/2 cup vegetable shortening
 NOM
       
-    parses_ingredients_block ingredients, [
+    parses_ingredients_block basic_ingredients, [
       [1, :teaspoon, 'vanilla extract'],
       [3, :cup, "confectioner's sugar"],
       [2, :tablespoon, 'milk'],
