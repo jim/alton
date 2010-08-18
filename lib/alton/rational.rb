@@ -1,3 +1,5 @@
+require 'rational'
+
 class Rational
   
   def to_human
