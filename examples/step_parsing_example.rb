@@ -1,18 +1,5 @@
 require 'example_helper'
 
-# def ingredient_should_match(ingredient, quantity, unit, name)
-#   ingredient.name.should eql(name)
-#   ingredient.amount.unit.key.should eql(unit)
-#   ingredient.amount.quantity.should eql(quantity)
-# end
-# 
-# def parses_ingredient(text, quantity, unit, name, options={})
-#   it "parses '#{text}'", options do
-#     ingredient = Alton::Ingredient::parse_text(text)
-#     ingredient_should_match(ingredient, quantity, unit, name)
-#   end
-# end
-
 def parses_steps_block(text, expected_array, options={})
   it "parses steps '#{text}'", options do
     lines = text.split("\n")
