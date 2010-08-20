@@ -21,23 +21,56 @@ describe "Amount" do
     
     before(:all) do
       @cup = Alton::Unit(:cup)
-      @one = Alton::Amount.new(1, @cup)
-      @half = Alton::Amount.new(0.5, @cup)
-      @third = Alton::Amount.new(Rational(1,3), @cup)
+      @pint = Alton::Unit(:pint)
+      @one_cup = Alton::Amount.new(1, @cup)
+      @half_cup = Alton::Amount.new(0.5, @cup)
+      @third_cup = Alton::Amount.new(Rational(1,3), @cup)
+      @two_pints = Alton::Amount.new(2, @pint)
     end
     
     it "adds integers and decimals" do
-      one_and_a_half = @one + @half
+      one_and_a_half = @one_cup + @half_cup
       one_and_a_half.quantity.should eql(1.5)
       one_and_a_half.unit.should eql(@cup)
     end
     
     it "adds rationals and integers" do
-      one_and_a_third = @one + @third
+      one_and_a_third = @one_cup + @third_cup
       one_and_a_third.quantity.should eql(Rational(4,3))
       one_and_a_third.unit.should eql(@cup)
     end
     
+    it "adds amount with different units" do
+      two_and_a_half_pints = @one_cup + @two_pints
+      two_and_a_half_pints.quantity.should eql(2.5)
+      two_and_a_half_pints.unit.should eql(@pint)
+    end
+    
+  end
+  
+  describe "converting between units" do
+    it "converts to cups using a plural symbol name" do
+      two_pints = Alton::Amount.new(2, Alton::Unit(:pint))
+      two_pints.in(:cups).should eql(Alton::Amount.new(4, Alton::Unit(:cup)))
+    end
+    
+    it "converts to cups using a singular symbol name" do
+      two_pints = Alton::Amount.new(2, Alton::Unit(:pint))
+      two_pints.in(:cup).should eql(Alton::Amount.new(4, Alton::Unit(:cup)))
+    end
+    
+    it "converts to cups using a unit instance" do
+      two_pints = Alton::Amount.new(2, Alton::Unit(:pint))
+      two_pints.in(Alton::Unit(:cup)).should eql(Alton::Amount.new(4, Alton::Unit(:cup)))
+    end
+    
+  end
+  
+  describe "equality testing" do
+    it "is equal" do
+      cup = Alton::Unit(:cup)
+      Alton::Amount.new(3, cup).should eql(Alton::Amount.new(3, cup))
+    end
   end
   
 end

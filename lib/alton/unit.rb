@@ -54,7 +54,8 @@ module Alton
       def abbreviated(name, options={})
         @unit.abbreviations[name] = options
       end
-      def volume(*args)
+      def volume(quantity, unit)
+        @unit.instance_eval "def #{unit}; #{quantity}; end"
       end
     end
 

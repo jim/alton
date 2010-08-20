@@ -3,9 +3,22 @@ module Alton
   class Amount < Struct.new(:quantity, :unit)
 
     def +(other)
-      return self.class.new(quantity + other.quantity, unit)
+      if self.unit == other.unit
+        sum = quantity + other.quantity
+      else
+        sum = quantity + other.in(other.unit).quantity
+      end
+      self.class.new(sum, unit)
     end
 
+    def in(new_unit)
+      new_unit = Alton::Unit(new_unit.to_s.singularize.to_sym) if new_unit.is_a?(Symbol) || new_unit.is_a?(String)
+      raise "in requires either a symbol or Alton::Unit instance" unless new_unit.is_a?(Alton::Unit)
+      conversion_rate = self.unit.fl_oz / new_unit.fl_oz
+      sum = quantity * conversion_rate
+      self.class.new(sum, new_unit)
+    end
+    
     def to_s
       "#{@quantity} #{@unit}"
     end
