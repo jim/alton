@@ -36,6 +36,10 @@ module Alton
       end
       false
     end
+    
+    def to_s
+      name
+    end
 
     module Proxy
       def self.unit(name, &block)
