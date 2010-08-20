@@ -1,15 +1,19 @@
 require 'example_helper'
 
-def ingredient_should_match(ingredient, quantity, unit, name)
+def ingredient_should_match(ingredient, quantity, unit, name, options={})
   ingredient.name.should eql(name)
   ingredient.amount.unit.key.should eql(unit)
   ingredient.amount.quantity.should eql(quantity)
+  options.each_pair do |key, value|
+    next if key == :focused
+    ingredient.notes[key].should eql(value)
+  end
 end
 
 def parses_ingredient(text, quantity, unit, name, options={})
   it "parses ingredient '#{text}'", options do
     ingredient = Alton::Ingredient::parse_text(text)
-    ingredient_should_match(ingredient, quantity, unit, name)
+    ingredient_should_match(ingredient, quantity, unit, name, options)
   end
 end
 
@@ -87,7 +91,7 @@ describe "Ingredient parsing" do
   describe "odd units" do
     
     parses_ingredient '2 cloves garlic, finely minced and mashed',
-      2, :clove, 'garlic, finely minced and mashed'
+      2, :clove, 'garlic', :food => 'finely minced and mashed'
 
   end
 

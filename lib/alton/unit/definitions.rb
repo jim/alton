@@ -44,6 +44,7 @@ Alton::Unit.define do
     weight 16, :oz
   end
 
+  unit :bunch
   unit :clove
   
   # Whole apple, half a pizza, etc.
