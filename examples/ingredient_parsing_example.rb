@@ -135,7 +135,7 @@ NOM
       1, :object, 'garlic clove', :food => 'minced'
     
     parses_ingredient '2 limes, cut in wedges',
-      2, :object, 'limes', :food => 'cut into wedges'
+      2, :object, 'limes', :food => 'cut in wedges'
     
     parses_ingredient '1 cup dried lentils, rinsed',
       1, :cup, 'dried lentils', :food => 'rinsed'
