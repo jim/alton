@@ -6,19 +6,15 @@ module Alton
       if self.unit == other.unit
         sum = quantity + other.quantity
       else
-        puts "adding #{quantity} #{unit} and #{other.in(other.unit).quantity} #{unit}"
-        sum = quantity + other.in(other.unit).quantity
+        sum = self.in(other.unit).quantity + other.quantity
       end
-      self.class.new(sum, unit)
+      self.class.new(sum, other.unit)
     end
 
     def in(new_unit)
       new_unit = Alton::Unit(new_unit.to_s.singularize.to_sym) if new_unit.is_a?(Symbol) || new_unit.is_a?(String)
       raise "in requires either a symbol or Alton::Unit instance" unless new_unit.is_a?(Alton::Unit)
       conversion_rate = self.unit.fl_oz.to_f / new_unit.fl_oz
-      puts "new fl_oz: #{new_unit.fl_oz}"
-      puts "self fl_oz: #{unit.fl_oz}"
-      puts "conversion rate: #{conversion_rate}"
       sum = quantity * conversion_rate
       sum = sum.to_i if Integer(sum) == sum
       self.class.new(sum, new_unit)
