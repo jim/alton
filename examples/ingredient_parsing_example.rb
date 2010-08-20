@@ -120,15 +120,18 @@ NOM
       
     parses_ingredient '1/2 cup ketchup',
       Rational(1,2), :cup, 'ketchup'
-      
-    parses_ingredient '1 (1.25 ounce) package taco seasoning mix',
-      1.25, :ounce, 'taco seasoning mix', :object => 'package', :count => 1
     
     parses_ingredient '2/3 cup cold water',
       Rational(2,3), :cup, 'cold water'
+    
+    parses_ingredient '1 bunch cilantro, chopped',
+      1, :bunch, 'cilantro', :food => 'chopped'
       
     parses_ingredient '1 garlic clove, minced',
       1, :object, 'garlic clove', :food => 'minced'
+    
+    parses_ingredient '2 limes, cut in wedges',
+      2, :object, 'limes', :food => 'cut into wedges'
     
     parses_ingredient '1 cup dried lentils, rinsed',
       1, :cup, 'dried lentils', :food => 'rinsed'
@@ -139,8 +142,19 @@ NOM
     parses_ingredient '12 taco shells',
       12, :object, 'taco shells'
     
+    parses_ingredient '1 (4 pound) frozen rump roast',
+      4, :pound, 'frozen rump roast'
+
+    parses_ingredient '8 (7 inch) flour tortillas, warmed',
+      8, :object, 'tortilla', :size => '7 inch', :food => 'warmed'
+
+    parses_ingredient '1 (1.25 ounce) package taco seasoning mix',
+      1.25, :ounce, 'taco seasoning mix', :package => '1.25 ounce package', :count => 1
+    
     parses_ingredient '2 (4 ounce) cans diced green chilies, drained',
-      4, :ounces, 'diced green chiles', :object => 'can', :food => 'drained', :count => 2
+      8, :ounces, 'diced green chiles', :food => 'drained', :count => 2, :package => '4 ounce cans'
+   
+    # parses_ingredient 'salt and pepper to taste'
     
   end
 

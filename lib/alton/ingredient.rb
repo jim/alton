@@ -1,7 +1,12 @@
 module Alton
+
+  PACKAGES = %w{bag bottle box can container package jar}
+  
+  class UnparseableIngredient < StandardError; end
+  class UnsupportedUnit < StandardError; end
   
   class IngredientMismatch < StandardError; end
-  
+    
   class Ingredient
     attr_accessor :name, :amount, :notes
   
@@ -10,9 +15,6 @@ module Alton
       @amount = amount
       @notes = {}
     end
-  
-    class UnparseableIngredient < StandardError; end
-    class UnsupportedUnit < StandardError; end
     
     # Parses an ingredient block into an array of Ingredients
     #
