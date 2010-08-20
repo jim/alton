@@ -119,7 +119,7 @@ NOM
     parses_ingredients_block tacos_stolen_from_allrecipes, [
       [1, :pound, 'lean ground beef'],
       [Rational(1,2), :cup, 'ketchup'],
-      [1, nil, 'onion', {:food_detail => 'diced', :quantity_detail => '1.25 ounce'}],
+      [1, nil, 'onion', {:food => 'diced', :quantity => '1.25 ounce'}],
       [Rational(2,3), :cup, 'cold water']]
     
   end

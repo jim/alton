@@ -2,7 +2,14 @@ module Alton
   
   class IngredientMismatch < StandardError; end
   
-  class Ingredient < Struct.new(:name, :amount)
+  class Ingredient
+    attr_accessor :name, :amount, :notes
+  
+    def initialize(name, amount)
+      @name = name
+      @amount = amount
+      @notes = {}
+    end
   
     class UnparseableIngredient < StandardError; end
     class UnsupportedUnit < StandardError; end
@@ -26,14 +33,6 @@ module Alton
     def self.parse_text(text)
 
       determine_quantity = lambda do |text|
-        # case text
-        #   when /(\d+) (\d)\/(\d+)/
-        #     $1.to_i + ($2.to_f / $3.to_i)
-        #   when /(\d+)\/(\d+)/
-        #     $1.to_f / $2.to_i
-        #   else
-        #     text.to_i
-        #   end
         Alton::Amount.parse_quantity(text)
       end
       
