@@ -91,7 +91,7 @@ describe "Ingredient parsing" do
   describe "odd units" do
     
     parses_ingredient '2 cloves garlic, finely minced and mashed',
-      2, :clove, 'garlic', :food => 'finely minced and mashed'
+      2, :clove, 'garlic', :prep => 'finely minced and mashed'
 
   end
 
@@ -120,7 +120,7 @@ NOM
       1, :pound, 'lean ground beef'
       
     parses_ingredient '1 onion, diced',
-      1, :object, 'onion', :food => 'diced'
+      1, :object, 'onion', :prep => 'diced'
       
     parses_ingredient '1/2 cup ketchup',
       Rational(1,2), :cup, 'ketchup'
@@ -129,19 +129,19 @@ NOM
       Rational(2,3), :cup, 'cold water'
     
     parses_ingredient '1 bunch cilantro, chopped',
-      1, :bunch, 'cilantro', :food => 'chopped'
+      1, :bunch, 'cilantro', :prep => 'chopped'
       
     parses_ingredient '1 garlic clove, minced',
-      1, :object, 'garlic clove', :food => 'minced'
+      1, :object, 'garlic clove', :prep => 'minced'
     
     parses_ingredient '2 limes, cut in wedges',
-      2, :object, 'limes', :food => 'cut in wedges'
+      2, :object, 'limes', :prep => 'cut in wedges'
     
     parses_ingredient '1 cup dried lentils, rinsed',
-      1, :cup, 'dried lentils', :food => 'rinsed'
+      1, :cup, 'dried lentils', :prep => 'rinsed'
     
     parses_ingredient '1 1/2 teaspoons salt, or to taste',
-      Rational(3,2), :teaspoon, 'salt', :food => 'or to taste'
+      Rational(3,2), :teaspoon, 'salt', :prep => 'or to taste'
     
     parses_ingredient '12 taco shells',
       12, :object, 'taco shells'
@@ -150,13 +150,13 @@ NOM
       4, :pound, 'frozen rump roast'
 
     parses_ingredient '8 (7 inch) flour tortillas, warmed',
-      8, :object, 'tortilla', :size => '7 inch', :food => 'warmed'
+      8, :object, 'tortilla', :size => '7 inch', :prep => 'warmed'
 
     parses_ingredient '1 (1.25 ounce) package taco seasoning mix',
       1.25, :ounce, 'taco seasoning mix', :package => '1.25 ounce package', :count => 1
     
-    parses_ingredient '2 (4 ounce) cans diced green chilies, drained',
-      8, :ounces, 'diced green chiles', :food => 'drained', :count => 2, :package => '4 ounce cans'
+    parses_ingredient '2 (4 ounce) cans diced green chiles, drained',
+      8, :ounce, 'diced green chiles', :prep => 'drained', :count => 2, :package => '4 ounce can'
    
     # parses_ingredient 'salt and pepper to taste'
     

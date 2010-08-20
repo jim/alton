@@ -44,6 +44,7 @@ Alton::Unit.define do
     weight 16, :oz
   end
 
+  unit :ounce
   unit :bunch
   unit :clove
   

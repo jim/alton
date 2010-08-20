@@ -24,8 +24,9 @@ module Alton
       "#{@quantity} #{@unit}"
     end
 
-    def self.parse_quantity(text)
-      if text =~ /(.+)\/(.+)/
+    def self.parse_quantity(input)
+      return input if input.is_a?(Numeric)
+      if input =~ /(.+)\/(.+)/
         numerator, denominator = $1, $2
         if numerator =~ /(.+) +(.+)/
           whole, numerator = $1.to_i, $2
@@ -33,10 +34,10 @@ module Alton
         else
           Rational(numerator.to_i, denominator.to_i)
         end        
-      elsif text =~ /\./
-        text.to_f
+      elsif input =~ /\./
+        input.to_f
       else
-        text.to_i
+        input.to_i
       end
     end
     

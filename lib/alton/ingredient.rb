@@ -1,10 +1,14 @@
 module Alton
 
+  class << self
+    attr_accessor :debug
+  end
+  self.debug = false
+
   PACKAGES = %w{bag bottle box can container package jar}
   
   class UnparseableIngredient < StandardError; end
   class UnsupportedUnit < StandardError; end
-  
   class IngredientMismatch < StandardError; end
     
   class Ingredient
@@ -51,21 +55,41 @@ module Alton
         unit.abbreviations.keys << unit.name
       end.flatten.map{|k|k.downcase}.uniq.join('|')
 
+      packages = PACKAGES.join('|')
+
+      packaged_regex = %r{(.+)\s+\(([\d\.\s]+?)\s*(#{units})\)s?\.?\s*(#{packages})s?\s*([^,]*),?\s*(.*)?}
       units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s*(.*)?}
-      whole_item_regex = %r{^([0-9/\s])\s+([^,]*),?\s*(.*)?$}
+      whole_object_regex = %r{^([0-9/\s])\s+([^,]*),?\s*(.*)?$}
         
       notes = {}
+      
+      lowercase_text = text.downcase
         
-      if text.downcase =~ units_regex
-        # puts 'using units'
-        quantity, unit, name = $1, $2, $3
-        notes[:food] = $4 if $4
+      if lowercase_text =~ packaged_regex
+        puts 'using packages' if Alton.debug
+        # puts
+        # puts [$1, $2, $3, $4, $5].join(',')
+        raw_count, raw_quantity, unit, package, name, prep = $1, $2, $3, $4, $5, $6
+        count = determine_quantity.call(raw_count)
+        quantity = determine_quantity.call(raw_quantity) * count
+        # puts
+        # puts "count: #{count}"
+        # puts "quantity: #{quantity}"
+        notes[:count] = count
+        notes[:package] = "#{raw_quantity} #{unit} #{package}"
+        notes[:prep] = prep if prep
+      elsif lowercase_text =~ units_regex
+        puts 'using units' if Alton.debug
+        
+        quantity, unit, name, prep = $1, $2, $3, $4
+        notes[:prep] = prep if prep
         unit = text.match(/\s(#{unit})s?\.?\s/i)[1]
-      elsif text.downcase =~ whole_item_regex
-        # puts 'using using whole item'
-        # assume we don't have a unit
-        quantity, unit, name = $1, nil, $2
-        notes[:food] = $3 if $3
+      elsif lowercase_text =~ whole_object_regex
+        puts 'using using whole item' if Alton.debug
+        
+        quantity, name, prep = $1, $2, $3
+        unit = nil
+        notes[:prep] = prep if prep
       else
         raise UnparseableIngredient.new("could not parse '#{text}'")
       end

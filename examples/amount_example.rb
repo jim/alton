@@ -1,7 +1,7 @@
 require 'example_helper'
 
-def parses(text, numerator, denominator, options={})
-  it "parses '#{text}'", options do
+def parses_fraction(text, numerator, denominator, options={})
+  it "parses fraction '#{text}'", options do
     result = Alton::Amount::parse_quantity(text)
     result.class.should eql(Rational)
     result.numerator.should eql(numerator)
@@ -11,11 +11,24 @@ end
 
 describe "Amount" do
   
-  parses '1/2', 1, 2
-  parses '4/2', 2, 1
-  parses '6/7', 6, 7
-  parses '1 3/4', 7, 4
-  parses '3 4/3', 13, 3
+  parses_fraction '1/2', 1, 2
+  parses_fraction '4/2', 2, 1
+  parses_fraction '6/7', 6, 7
+  parses_fraction '1 3/4', 7, 4
+  parses_fraction '3 4/3', 13, 3
+  
+  it "parses decimals" do
+    result = Alton::Amount::parse_quantity('1.25')
+    result.class.should eql(Float)
+    result.should eql(1.25)
+  end
+  
+  it "does not modify numeric values" do
+    Alton::Amount::parse_quantity(1).should eql(1)
+    Alton::Amount::parse_quantity(1.5).should eql(1.5)
+    Alton::Amount::parse_quantity(Rational(3,4)).should eql(Rational(3,4))
+  end
+  
   
   describe "basic math" do
     
