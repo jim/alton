@@ -108,19 +108,39 @@ NOM
       [Rational(1,2), :cup, 'butter'],
       [Rational(1,2), :cup, 'vegetable shortening']]
     
-    tacos_stolen_from_allrecipes = <<NOM
-1 pound lean ground beef
-1 onion, diced
-1/2 cup ketchup
-1 (1.25 ounce) package taco seasoning mix
-2/3 cup cold water
-NOM
+  end
 
-    parses_ingredients_block tacos_stolen_from_allrecipes, [
-      [1, :pound, 'lean ground beef'],
-      [Rational(1,2), :cup, 'ketchup'],
-      [1, nil, 'onion', {:food => 'diced', :quantity => '1.25 ounce'}],
-      [Rational(2,3), :cup, 'cold water']]
+  describe "tacos stolen from allrecipes.com" do
+    
+    parses_ingredient '1 pound lean ground beef',
+      1, :pound, 'lean ground beef'
+      
+    parses_ingredient '1 onion, diced',
+      1, :object, 'onion', :food => 'diced'
+      
+    parses_ingredient '1/2 cup ketchup',
+      Rational(1,2), :cup, 'ketchup'
+      
+    parses_ingredient '1 (1.25 ounce) package taco seasoning mix',
+      1.25, :ounce, 'taco seasoning mix', :object => 'package', :count => 1
+    
+    parses_ingredient '2/3 cup cold water',
+      Rational(2,3), :cup, 'cold water'
+      
+    parses_ingredient '1 garlic clove, minced',
+      1, :object, 'garlic clove', :food => 'minced'
+    
+    parses_ingredient '1 cup dried lentils, rinsed',
+      1, :cup, 'dried lentils', :food => 'rinsed'
+    
+    parses_ingredient '1 1/2 teaspoons salt, or to taste',
+      Rational(3/2), :teaspoon, 'salt', :food => 'or to taste'
+    
+    parses_ingredient '12 taco shells',
+      12, :object, 'taco shells'
+    
+    parses_ingredient '2 (4 ounce) cans diced green chilies, drained',
+      4, :ounces, 'diced green chiles', :object => 'can', :food => 'drained', :count => 2
     
   end
 

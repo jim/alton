@@ -118,6 +118,11 @@ Alton::Unit.define do
     abbreviated 'lb'
     weight 16, :oz
   end
+
   unit :clove
+  
+  # Whole apple, half a pizza, etc.
+  unit :object
+  
 
 end

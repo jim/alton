@@ -37,6 +37,7 @@ module Alton
       end
       
       determine_unit = lambda do |text|
+        return Alton::Unit(:object) if text.nil?
         match = Alton.units.find do |unit|
           unit.match?(text)
         end
@@ -48,16 +49,29 @@ module Alton
         unit.abbreviations.keys << unit.name
       end.flatten.map{|k|k.downcase}.uniq.join('|')
 
-      regex = %r{(.+)\s+(#{units})s?\.?\s+(.+)}
-
-      if text.downcase =~ regex
+      units_regex = %r{(.+)\s+(#{units})s?\.?\s+(.+)}
+      whole_item_regex = %r{^([0-9/\s])\s+([^,]*),?\s+(.*)$}
+        
+      notes = {}
+        
+      if text.downcase =~ units_regex
         quantity, unit, name = $1, $2, $3
         unit = text.match(/\s(#{unit})s?\.?\s/i)[1]
-        amount = Amount.new(determine_quantity.call(quantity), determine_unit.call(unit))
-        self.new(name, amount)
+      elsif text.downcase =~ whole_item_regex
+        # assume we don't have a unit
+        puts
+        puts $1
+        puts $2
+        puts $3
+        quantity, unit, name = $1, nil, $2
+        notes[:food] = $3 if $3
       else
         raise UnparseableIngredient.new("could not parse '#{text}'")
       end
+        amount = Amount.new(determine_quantity.call(quantity), determine_unit.call(unit))
+        ingredient = self.new(name, amount)
+        ingredient.notes[:food] = $4 unless $4.nil?
+        ingredient
     end
     
     # Combines two Ingredient objects
