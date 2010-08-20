@@ -51,18 +51,21 @@ module Alton
         unit.abbreviations.keys << unit.name
       end.flatten.map{|k|k.downcase}.uniq.join('|')
 
-      units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s?(.*)?}
-      whole_item_regex = %r{^([0-9/\s])\s+([^,]*),?\s+(.*)$}
+      units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s*(.*)?}
+      whole_item_regex = %r{^([0-9/\s])\s+([^,]*),?\s*(.*)?$}
         
       notes = {}
         
       if text.downcase =~ units_regex
+        # puts 'using units'
         quantity, unit, name = $1, $2, $3
         notes[:food] = $4 if $4
         unit = text.match(/\s(#{unit})s?\.?\s/i)[1]
       elsif text.downcase =~ whole_item_regex
+        # puts 'using using whole item'
         # assume we don't have a unit
         quantity, unit, name = $1, nil, $2
+        notes[:food] = $3 if $3
       else
         raise UnparseableIngredient.new("could not parse '#{text}'")
       end

@@ -141,7 +141,7 @@ NOM
       1, :cup, 'dried lentils', :food => 'rinsed'
     
     parses_ingredient '1 1/2 teaspoons salt, or to taste',
-      Rational(3/2), :teaspoon, 'salt', :food => 'or to taste'
+      Rational(3,2), :teaspoon, 'salt', :food => 'or to taste'
     
     parses_ingredient '12 taco shells',
       12, :object, 'taco shells'
