@@ -61,33 +61,28 @@ module Alton
       units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s*(.*)?}
       whole_object_regex = %r{^([0-9/\s])\s+([^,]*),?\s*(.*)?$}
         
-      notes = {}
-      
+      notes = {}        
       lowercase_text = text.downcase
         
       if lowercase_text =~ packaged_regex
         puts 'using packages' if Alton.debug
-        # puts
-        # puts [$1, $2, $3, $4, $5].join(',')
-        raw_count, raw_quantity, unit, package, name, prep = $1, $2, $3, $4, $5, $6
+        
+        match, raw_count, raw_quantity, unit, package, name, prep = $~.to_a
         count = determine_quantity.call(raw_count)
         quantity = determine_quantity.call(raw_quantity) * count
-        # puts
-        # puts "count: #{count}"
-        # puts "quantity: #{quantity}"
         notes[:count] = count
         notes[:package] = "#{raw_quantity} #{unit} #{package}"
         notes[:prep] = prep if prep
       elsif lowercase_text =~ units_regex
         puts 'using units' if Alton.debug
         
-        quantity, unit, name, prep = $1, $2, $3, $4
+        match, quantity, unit, name, prep = $~.to_a
         notes[:prep] = prep if prep
         unit = text.match(/\s(#{unit})s?\.?\s/i)[1]
       elsif lowercase_text =~ whole_object_regex
         puts 'using using whole item' if Alton.debug
         
-        quantity, name, prep = $1, $2, $3
+        match, quantity, name, prep = $~.to_a
         unit = nil
         notes[:prep] = prep if prep
       else
