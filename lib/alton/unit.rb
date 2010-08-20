@@ -61,6 +61,7 @@ module Alton
       def volume(quantity, unit)
         @unit.instance_eval "def #{unit}; #{quantity}; end"
       end
+      alias weight volume
     end
 
     def self.define(&block)
@@ -112,6 +113,11 @@ Alton::Unit.define do
     volume 3785.41, :ml
   end
 
+
+  unit :pound do
+    abbreviated 'lb'
+    weight 16, :oz
+  end
   unit :clove
 
 end

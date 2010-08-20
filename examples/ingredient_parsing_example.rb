@@ -108,6 +108,20 @@ NOM
       [Rational(1,2), :cup, 'butter'],
       [Rational(1,2), :cup, 'vegetable shortening']]
     
+    tacos_stolen_from_allrecipes = <<NOM
+1 pound lean ground beef
+1 onion, diced
+1/2 cup ketchup
+1 (1.25 ounce) package taco seasoning mix
+2/3 cup cold water
+NOM
+
+    parses_ingredients_block tacos_stolen_from_allrecipes, [
+      [1, :pound, 'lean ground beef'],
+      [Rational(1,2), :cup, 'ketchup'],
+      [1, nil, 'onion', {:food_detail => 'diced', :quantity_detail => '1.25 ounce'}],
+      [Rational(2,3), :cup, 'cold water']]
+    
   end
 
 end
