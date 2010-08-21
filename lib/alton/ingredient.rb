@@ -59,7 +59,7 @@ module Alton
 
       packaged_regex = %r{(.+)\s+\(([\d\.\s]+?)\s*(#{units})\)s?\.?\s*(#{packages})s?\s*([^,]*),?\s*(.*)?}
       units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s*(.*)?}
-      whole_object_regex = %r{^([0-9/\s])\s+([^,]*),?\s*(.*)?$}
+      whole_object_regex = %r{([0-9/\s]+)\s+([^,]*),?\s*(.*)?}
         
       notes = {}        
       lowercase_text = text.downcase
@@ -88,10 +88,10 @@ module Alton
       else
         raise UnparseableIngredient.new("could not parse '#{text}'")
       end
-        amount = Amount.new(determine_quantity.call(quantity), determine_unit.call(unit))
-        ingredient = self.new(name, amount)
-        ingredient.notes = notes
-        ingredient
+      amount = Amount.new(determine_quantity.call(quantity), determine_unit.call(unit))
+      ingredient = self.new(name, amount)
+      ingredient.notes = notes
+      ingredient
     end
     
     # Combines two Ingredient objects
