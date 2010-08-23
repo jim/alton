@@ -59,7 +59,7 @@ module Alton
 
       packaged_regex = %r{(.+)\s+\(?([\d\.\s]+?)[-\s]*(#{units})\)?s?\.?\s*(#{packages})s?\s*([^,]*),?\s*(.*)?}
       units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s*(.*)?}
-      whole_object_regex = %r{([0-9/\s]+)\s+([^,]*),?\s*(.*)?}
+      whole_object_regex = %r{([\d/\s]+)\s+(?:\(([\d\.\s]*)[-\s]+(#{units})\))?\s*([^,]*),?\s*(.*)?}
         
       notes = {}        
       lowercase_text = text.downcase
@@ -81,9 +81,16 @@ module Alton
         unit = text.match(/\s(#{unit})s?\.?\s/i)[1]
       elsif lowercase_text =~ whole_object_regex
         puts 'using using whole item' if Alton.debug
-        
-        match, quantity, name, prep = $~.to_a
-        unit = nil
+
+        match, raw_count, raw_quantity, unit, name, prep = $~.to_a
+        if raw_quantity.blank?
+          quantity = raw_count
+        else
+          count = determine_quantity.call(raw_count)
+          quantity = determine_quantity.call(raw_quantity) * count
+          notes[:count] = count
+        end
+        unit = nil if unit.blank?
         notes[:prep] = prep if prep
       else
         raise UnparseableIngredient.new("could not parse '#{text}'")

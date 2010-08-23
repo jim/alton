@@ -6,13 +6,14 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "alton"
-    gem.summary = %Q{Parses textual recipes into Ruby objects}
-    gem.description = %Q{Parses textual recipes into Ruby objects}
+    gem.summary = %Q{Parses recipe text into Ruby objects}
+    gem.description = %Q{Parses recipe text into Ruby objects}
     gem.email = "jim@autonomousmachine.com"
     gem.homepage = "http://github.com/jim/alton"
     gem.authors = ["Jim Benton"]
     gem.add_development_dependency "micronaut"
     gem.add_development_dependency "yard"
+    gem.add_dependency 'activesupport'
   end
 rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: sudo gem install jeweler"
