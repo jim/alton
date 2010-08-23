@@ -57,7 +57,7 @@ module Alton
 
       packages = PACKAGES.join('|')
 
-      packaged_regex = %r{(.+)\s+\(([\d\.\s]+?)\s*(#{units})\)s?\.?\s*(#{packages})s?\s*([^,]*),?\s*(.*)?}
+      packaged_regex = %r{(.+)\s+\(?([\d\.\s]+?)[-\s]*(#{units})\)?s?\.?\s*(#{packages})s?\s*([^,]*),?\s*(.*)?}
       units_regex = %r{(.+)\s+(#{units})s?\.?\s+([^,]*),?\s*(.*)?}
       whole_object_regex = %r{([0-9/\s]+)\s+([^,]*),?\s*(.*)?}
         

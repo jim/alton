@@ -147,7 +147,7 @@ NOM
       12, :object, 'taco shells'
     
     parses_ingredient '1 (4 pound) frozen rump roast',
-      4, :pound, 'frozen rump roast'
+      4, :pound, 'frozen rump roast', :count => 1
 
     parses_ingredient '8 (7 inch) flour tortillas, warmed',
       8, :object, 'tortilla', :size => '7 inch', :prep => 'warmed'
@@ -159,6 +159,19 @@ NOM
       8, :ounce, 'diced green chiles', :prep => 'drained', :count => 2, :package => '4 ounce can'
    
     # parses_ingredient 'salt and pepper to taste'
+    
+  end
+
+  describe "stolen from cooksillustrated.com" do
+    
+    parses_ingredient '1  24-ounce jar roasted red peppers, rinsed, patted dry, and cut into 1/2-inch dice (about 1 1/2 cups)',
+      24, :ounce, 'roasted red peppers', :package => '24 ounce jar', :count => 1,
+      :prep => 'rinsed, patted dry, and cut into 1/2-inch dice (about 1 1/2 cups)'
+    
+    # parses_ingredient 'medium garlic clove, minced or pressed through garlic press (about 1 teaspoon)'
+    # '1 loaf country bread with thick crust (about 10 by 5 inches, ends discarded), sliced crosswise into into 3/4-inch-thick pieces'
+   # '1 1/2 pounds carrots (about 8 medium), peeled and sliced 1/2 inch thick'
+   # '1 recipe Toasted Bread for Bruschetta (see related recipe)'
     
   end
 
